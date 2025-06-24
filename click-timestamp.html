@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ghi thời gian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f3f4f6;
+    }
+    .container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+    }
+    input {
+      width: 100%;
+      max-width: 400px;
+      padding: 0.5rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 0.75rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    button {
+      padding: 1rem 2.5rem;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    button:hover {
+      background-color: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <input id="noteInput" type="text" placeholder="Nhập ghi chú..." />
+    <button onclick="sendTimestamp()">Ghi thời gian</button>
+  </div>
+
+  <script>
+    function sendTimestamp() {
+      const note = document.getElementById("noteInput").value;
+      const params = new URLSearchParams({ note });
+
+      fetch("https://script.google.com/macros/s/AKfycbwcsGOnnGw0OxD8GincWuT7MOzgkKSpJlSTerKKTe_AhJ1IfybCn1kFZGYWv3DOKS5q/exec?" + params.toString(), {
+        method: "POST",
+      })
+      .then(() => {
+        alert("✅ Đã gửi!");
+        document.getElementById("noteInput").value = "";
+      })
+      .catch((err) => {
+        alert("❌ Lỗi khi gửi.");
+        console.error(err);
+      });
+    }
+  </script>
+</body>
+</html>
